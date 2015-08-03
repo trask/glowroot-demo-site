@@ -1,0 +1,257 @@
+{
+  "transaction": {
+    "profilingIntervalMillis": 1000,
+    "slowThresholdMillis": 2000
+  },
+  "ui": {
+    "port": 4000,
+    "defaultDisplayedTransactionType": "Servlet",
+    "defaultDisplayedPercentiles": [
+      50.0,
+      95.0,
+      99.0
+    ],
+    "adminPasswordHash": "v3nqmcl6C2sjQI0M8RV4gA:d3AxkhLzPtJrgNogawjR2A:100000",
+    "anonymousAccess": "read-only",
+    "sessionTimeoutMinutes": 30
+  },
+  "storage": {
+    "rollupExpirationHours": [
+      48,
+      336,
+      1440
+    ],
+    "traceExpirationHours": 720,
+    "rollupCappedDatabaseSizesMb": [
+      500,
+      1000,
+      2000
+    ],
+    "traceCappedDatabaseSizeMb": 2000
+  },
+  "smtp": {
+    "fromEmailAddress": "glowroot@demo.glowroot.org",
+    "host": "localhost",
+    "ssl": false
+  },
+  "advanced": {
+    "timerWrapperMethods": false,
+    "weavingTimer": false,
+    "immediatePartialStoreThresholdSeconds": 60,
+    "maxAggregateTransactionsPerTransactionType": 500,
+    "maxAggregateQueriesPerQueryType": 500,
+    "maxTraceEntriesPerTransaction": 2000,
+    "maxStackTraceSamplesPerTransaction": 10000,
+    "captureThreadInfo": true,
+    "captureGcActivity": true,
+    "mbeanGaugeNotFoundDelaySeconds": 60
+  },
+  "plugins": [
+    {
+      "id": "cassandra",
+      "enabled": true,
+      "properties": {
+        "captureResultSetNavigate": true,
+        "stackTraceThresholdMillis": 1000.0
+      }
+    },
+    {
+      "id": "http-client",
+      "enabled": true,
+      "properties": { }
+    },
+    {
+      "id": "jdbc",
+      "enabled": true,
+      "properties": {
+        "captureBindParameters": true,
+        "captureResultSetNavigate": true,
+        "captureResultSetGet": false,
+        "captureGetConnection": true,
+        "captureConnectionClose": true,
+        "capturePreparedStatementCreation": false,
+        "captureStatementClose": false,
+        "captureTransactionLifecycleTraceEntries": false,
+        "captureConnectionLifecycleTraceEntries": false,
+        "stackTraceThresholdMillis": 1000.0
+      }
+    },
+    {
+      "id": "jms",
+      "enabled": true,
+      "properties": { }
+    },
+    {
+      "id": "logger",
+      "enabled": true,
+      "properties": {
+        "traceErrorOnErrorWithThrowable": true,
+        "traceErrorOnErrorWithoutThrowable": false,
+        "traceErrorOnWarningWithThrowable": false,
+        "traceErrorOnWarningWithoutThrowable": false
+      }
+    },
+    {
+      "id": "quartz",
+      "enabled": true,
+      "properties": { }
+    },
+    {
+      "id": "servlet",
+      "enabled": true,
+      "properties": {
+        "sessionUserAttribute": "",
+        "captureSessionAttributes": "",
+        "captureRequestParameters": "*",
+        "maskRequestParameters": "*password*",
+        "captureRequestHeaders": "",
+        "captureResponseHeaders": ""
+      }
+    }
+  ],
+  "instrumentation": [
+    {
+      "className": "org.thymeleaf.spring4.view.ThymeleafView",
+      "methodName": "render",
+      "methodParameterTypes": [
+        "java.util.Map",
+        "javax.servlet.http.HttpServletRequest",
+        "javax.servlet.http.HttpServletResponse"
+      ],
+      "captureKind": "trace-entry",
+      "traceEntryMessageTemplate": "thymeleaf view: {{this.templateName}}",
+      "traceEntryCaptureSelfNested": false,
+      "timerName": "thymeleaf view"
+    },
+    {
+      "className": "org.springframework.web.servlet.mvc.Controller",
+      "methodName": "handleRequest",
+      "methodParameterTypes": [
+        "javax.servlet.http.HttpServletRequest",
+        "javax.servlet.http.HttpServletResponse"
+      ],
+      "captureKind": "trace-entry",
+      "traceEntryMessageTemplate": "spring controller: {{this.class.name}}",
+      "traceEntryCaptureSelfNested": false,
+      "timerName": "spring controller"
+    }
+  ],
+  "gauges": [
+    {
+      "mbeanObjectName": "java.lang:type=Memory",
+      "mbeanAttributes": [
+        {
+          "name": "HeapMemoryUsage/used",
+          "counter": false
+        }
+      ]
+    },
+    {
+      "mbeanObjectName": "java.lang:type=MemoryPool,name=*",
+      "mbeanAttributes": [
+        {
+          "name": "Usage/used",
+          "counter": false
+        }
+      ]
+    },
+    {
+      "mbeanObjectName": "java.lang:type=GarbageCollector,name=*",
+      "mbeanAttributes": [
+        {
+          "name": "CollectionCount",
+          "counter": true
+        },
+        {
+          "name": "CollectionTime",
+          "counter": true
+        }
+      ]
+    },
+    {
+      "mbeanObjectName": "java.lang:type=OperatingSystem",
+      "mbeanAttributes": [
+        {
+          "name": "FreePhysicalMemorySize",
+          "counter": false
+        },
+        {
+          "name": "ProcessCpuLoad",
+          "counter": false
+        },
+        {
+          "name": "SystemCpuLoad",
+          "counter": false
+        }
+      ]
+    },
+    {
+      "mbeanObjectName": "tomcat.jdbc:name=\"jdbc/web\",context=/,engine=Catalina,type=ConnectionPool,host=localhost,class=org.apache.tomcat.jdbc.pool.DataSource",
+      "mbeanAttributes": [
+        {
+          "name": "Size",
+          "counter": false
+        },
+        {
+          "name": "Active",
+          "counter": false
+        }
+      ]
+    },
+    {
+      "mbeanObjectName": "Catalina:type=ThreadPool,name=\"http-nio-8080\"",
+      "mbeanAttributes": [
+        {
+          "name": "currentThreadsBusy",
+          "counter": false
+        },
+        {
+          "name": "currentThreadCount",
+          "counter": false
+        }
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "transactionType": "Servlet",
+      "percentile": 95.0,
+      "timePeriodMinutes": 60,
+      "thresholdMillis": 5000,
+      "minTransactionCount": 1000,
+      "emailAddresses": [
+        "trask.stalnaker@gmail.com"
+      ]
+    },
+    {
+      "transactionType": "Servlet",
+      "percentile": 50.0,
+      "timePeriodMinutes": 60,
+      "thresholdMillis": 5000,
+      "minTransactionCount": 100,
+      "emailAddresses": [
+        "trask.stalnaker@gmail.com"
+      ]
+    },
+    {
+      "transactionType": "Servlet",
+      "percentile": 50.0,
+      "timePeriodMinutes": 5,
+      "thresholdMillis": 5000,
+      "minTransactionCount": 100,
+      "emailAddresses": [
+        "trask.stalnaker@gmail.com"
+      ]
+    },
+    {
+      "transactionType": "Servlet",
+      "percentile": 50.0,
+      "timePeriodMinutes": 1,
+      "thresholdMillis": 5000,
+      "minTransactionCount": 100,
+      "emailAddresses": [
+        "trask.stalnaker@gmail.com"
+      ]
+    }
+  ]
+}

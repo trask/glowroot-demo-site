@@ -54,8 +54,8 @@ mysqladmin -u root password password
 sudo yum -y install git
 echo $CLOCKSOURCE | sudo tee /sys/devices/system/clocksource/clocksource0/current_clocksource > /dev/null
 
-curl http://archive.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz | tar xz
-export PATH=\$PATH:\$PWD/apache-maven-3.3.3/bin
+curl http://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz | tar xz
+export PATH=\$PATH:\$PWD/apache-maven-3.3.9/bin
 
 ./setup.sh
 

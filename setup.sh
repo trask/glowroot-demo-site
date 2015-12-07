@@ -7,7 +7,7 @@
 git clone https://github.com/BroadleafCommerce/DemoSite.git heatclinic
 # add StatementCache so that simulated database errors are on jdbc execution (and can see sql) instead of on prepare statement
 (cd heatclinic \
-  && git checkout broadleaf-4.0.0-GA \
+  && git checkout broadleaf-4.0.5-GA \
   && mvn package)
 
 # download gatling
@@ -17,7 +17,7 @@ mv gatling-charts-highcharts-* gatling
 rm gatling.zip
 
 # download mariadb jdbc driver
-curl -o mariadb-java-client.jar http://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/1.2.0/mariadb-java-client-1.2.0.jar
+curl -o mariadb-java-client.jar http://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/1.3.2/mariadb-java-client-1.3.2.jar
 
 # create mysql user for heatclinic
 mysql --user=root --password=password <<EOF

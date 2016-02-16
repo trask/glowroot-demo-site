@@ -1,7 +1,8 @@
 {
-  "transaction": {
+  "transactions": {
     "profilingIntervalMillis": 1000,
-    "slowThresholdMillis": 2000
+    "slowThresholdMillis": 2000,
+    "captureThreadStats": true
   },
   "ui": {
     "port": 4000,
@@ -35,15 +36,12 @@
     "ssl": false
   },
   "advanced": {
-    "timerWrapperMethods": false,
     "weavingTimer": false,
     "immediatePartialStoreThresholdSeconds": 60,
     "maxAggregateTransactionsPerTransactionType": 500,
     "maxAggregateQueriesPerQueryType": 500,
     "maxTraceEntriesPerTransaction": 2000,
     "maxStackTraceSamplesPerTransaction": 10000,
-    "captureThreadInfo": true,
-    "captureGcActivity": true,
     "mbeanGaugeNotFoundDelaySeconds": 60
   },
   "plugins": [
@@ -68,7 +66,7 @@
         "captureResultSetNavigate": true,
         "captureResultSetGet": false,
         "captureGetConnection": true,
-        "captureConnectionClose": true,
+        "captureConnectionClose": false,
         "capturePreparedStatementCreation": false,
         "captureStatementClose": false,
         "captureTransactionLifecycleTraceEntries": false,

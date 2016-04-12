@@ -4,7 +4,7 @@
 : ${AWS_SECRET_ACCESS_KEY:?}
 : ${AWS_DEFAULT_REGION:?}
 
-: ${IMAGE_ID:=ami-9ff7e8af}
+: ${IMAGE_ID:=ami-63b25203}
 : ${INSTANCE_TYPE:=c4.large}
 : ${VPC_SUBNET_ID:?}
 : ${SECURITY_GROUP_ID:?}

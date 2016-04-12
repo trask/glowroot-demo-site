@@ -5,13 +5,25 @@
     "captureThreadStats": true
   },
   "ui": {
-    "port": 4000,
-    "defaultDisplayedTransactionType": "Servlet",
+    "defaultDisplayedTransactionType": "Web",
     "defaultDisplayedPercentiles": [
       50.0,
       95.0,
       99.0
-    ],
+    ]
+  },
+  "advanced": {
+    "weavingTimer": false,
+    "immediatePartialStoreThresholdSeconds": 60,
+    "maxAggregateTransactionsPerType": 500,
+    "maxAggregateQueriesPerType": 500,
+    "maxAggregateServiceCallsPerType": 500,
+    "maxTraceEntriesPerTransaction": 5000,
+    "maxStackTraceSamplesPerTransaction": 50000,
+    "mbeanGaugeNotFoundDelaySeconds": 60
+  },
+  "access": {
+    "port": 4000,
     "adminPasswordHash": "v3nqmcl6C2sjQI0M8RV4gA:d3AxkhLzPtJrgNogawjR2A:100000",
     "anonymousAccess": "read-only",
     "sessionTimeoutMinutes": 30
@@ -35,105 +47,6 @@
     "host": "localhost",
     "ssl": false
   },
-  "advanced": {
-    "weavingTimer": false,
-    "immediatePartialStoreThresholdSeconds": 60,
-    "maxAggregateTransactionsPerTransactionType": 500,
-    "maxAggregateQueriesPerQueryType": 500,
-    "maxTraceEntriesPerTransaction": 2000,
-    "maxStackTraceSamplesPerTransaction": 10000,
-    "mbeanGaugeNotFoundDelaySeconds": 60
-  },
-  "plugins": [
-    {
-      "id": "cassandra",
-      "enabled": true,
-      "properties": {
-        "captureResultSetNavigate": true,
-        "stackTraceThresholdMillis": 1000.0
-      }
-    },
-    {
-      "id": "http-client",
-      "enabled": true,
-      "properties": { }
-    },
-    {
-      "id": "jdbc",
-      "enabled": true,
-      "properties": {
-        "captureBindParameters": true,
-        "captureResultSetNavigate": true,
-        "captureResultSetGet": false,
-        "captureGetConnection": true,
-        "captureConnectionClose": false,
-        "capturePreparedStatementCreation": false,
-        "captureStatementClose": false,
-        "captureTransactionLifecycleTraceEntries": false,
-        "captureConnectionLifecycleTraceEntries": false,
-        "stackTraceThresholdMillis": 1000.0
-      }
-    },
-    {
-      "id": "jms",
-      "enabled": true,
-      "properties": { }
-    },
-    {
-      "id": "logger",
-      "enabled": true,
-      "properties": {
-        "traceErrorOnErrorWithThrowable": true,
-        "traceErrorOnErrorWithoutThrowable": false,
-        "traceErrorOnWarningWithThrowable": false,
-        "traceErrorOnWarningWithoutThrowable": false
-      }
-    },
-    {
-      "id": "quartz",
-      "enabled": true,
-      "properties": { }
-    },
-    {
-      "id": "servlet",
-      "enabled": true,
-      "properties": {
-        "sessionUserAttribute": "",
-        "captureSessionAttributes": "",
-        "captureRequestParameters": "*",
-        "maskRequestParameters": "*password*",
-        "captureRequestHeaders": "",
-        "captureResponseHeaders": ""
-      }
-    }
-  ],
-  "instrumentation": [
-    {
-      "className": "org.thymeleaf.spring4.view.ThymeleafView",
-      "methodName": "render",
-      "methodParameterTypes": [
-        "java.util.Map",
-        "javax.servlet.http.HttpServletRequest",
-        "javax.servlet.http.HttpServletResponse"
-      ],
-      "captureKind": "trace-entry",
-      "traceEntryMessageTemplate": "thymeleaf view: {{this.templateName}}",
-      "traceEntryCaptureSelfNested": false,
-      "timerName": "thymeleaf view"
-    },
-    {
-      "className": "org.springframework.web.servlet.mvc.Controller",
-      "methodName": "handleRequest",
-      "methodParameterTypes": [
-        "javax.servlet.http.HttpServletRequest",
-        "javax.servlet.http.HttpServletResponse"
-      ],
-      "captureKind": "trace-entry",
-      "traceEntryMessageTemplate": "spring controller: {{this.class.name}}",
-      "traceEntryCaptureSelfNested": false,
-      "timerName": "spring controller"
-    }
-  ],
   "gauges": [
     {
       "mbeanObjectName": "java.lang:type=Memory",
@@ -212,44 +125,131 @@
   ],
   "alerts": [
     {
+      "kind": "transaction",
       "transactionType": "Servlet",
-      "percentile": 95.0,
-      "timePeriodMinutes": 60,
-      "thresholdMillis": 5000,
+      "transactionPercentile": 95.0,
+      "transactionThresholdMillis": 5000,
       "minTransactionCount": 1000,
+      "timePeriodSeconds": 3600,
       "emailAddresses": [
         "trask.stalnaker@gmail.com"
       ]
     },
     {
+      "kind": "transaction",
       "transactionType": "Servlet",
-      "percentile": 50.0,
-      "timePeriodMinutes": 60,
-      "thresholdMillis": 5000,
+      "transactionPercentile": 50.0,
+      "transactionThresholdMillis": 5000,
       "minTransactionCount": 100,
+      "timePeriodSeconds": 3600,
       "emailAddresses": [
         "trask.stalnaker@gmail.com"
       ]
     },
     {
+      "kind": "transaction",
       "transactionType": "Servlet",
-      "percentile": 50.0,
-      "timePeriodMinutes": 5,
-      "thresholdMillis": 5000,
+      "transactionPercentile": 50.0,
+      "transactionThresholdMillis": 5000,
       "minTransactionCount": 100,
+      "timePeriodSeconds": 300,
       "emailAddresses": [
         "trask.stalnaker@gmail.com"
       ]
     },
     {
+      "kind": "transaction",
       "transactionType": "Servlet",
-      "percentile": 50.0,
-      "timePeriodMinutes": 1,
-      "thresholdMillis": 5000,
+      "transactionPercentile": 50.0,
+      "transactionThresholdMillis": 5000,
       "minTransactionCount": 100,
+      "timePeriodSeconds": 60,
       "emailAddresses": [
         "trask.stalnaker@gmail.com"
       ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "cassandra",
+      "properties": {
+        "captureResultSetNavigate": true,
+        "stackTraceThresholdMillis": 1000.0
+      }
+    },
+    {
+      "id": "http-client",
+      "properties": { }
+    },
+    {
+      "id": "jdbc",
+      "properties": {
+        "captureBindParameters": true,
+        "captureResultSetNavigate": true,
+        "captureResultSetGet": false,
+        "captureGetConnection": true,
+        "captureConnectionClose": false,
+        "capturePreparedStatementCreation": false,
+        "captureStatementClose": false,
+        "captureTransactionLifecycleTraceEntries": false,
+        "captureConnectionLifecycleTraceEntries": false,
+        "stackTraceThresholdMillis": 1000.0
+      }
+    },
+    {
+      "id": "jms",
+      "properties": { }
+    },
+    {
+      "id": "logger",
+      "properties": {
+        "traceErrorOnErrorWithThrowable": true,
+        "traceErrorOnErrorWithoutThrowable": false,
+        "traceErrorOnWarningWithThrowable": false,
+        "traceErrorOnWarningWithoutThrowable": false
+      }
+    },
+    {
+      "id": "quartz",
+      "properties": { }
+    },
+    {
+      "id": "servlet",
+      "properties": {
+        "sessionUserAttribute": "",
+        "captureSessionAttributes": "",
+        "captureRequestParameters": "*",
+        "maskRequestParameters": "*password*",
+        "captureRequestHeaders": "",
+        "captureResponseHeaders": ""
+      }
+    }
+  ],
+  "instrumentation": [
+    {
+      "className": "org.thymeleaf.spring4.view.ThymeleafView",
+      "methodName": "render",
+      "methodParameterTypes": [
+        "java.util.Map",
+        "javax.servlet.http.HttpServletRequest",
+        "javax.servlet.http.HttpServletResponse"
+      ],
+      "captureKind": "trace-entry",
+      "traceEntryMessageTemplate": "thymeleaf view: {{this.templateName}}",
+      "traceEntryCaptureSelfNested": false,
+      "timerName": "thymeleaf view"
+    },
+    {
+      "className": "org.springframework.web.servlet.mvc.Controller",
+      "methodName": "handleRequest",
+      "methodParameterTypes": [
+        "javax.servlet.http.HttpServletRequest",
+        "javax.servlet.http.HttpServletResponse"
+      ],
+      "captureKind": "trace-entry",
+      "traceEntryMessageTemplate": "spring controller: {{this.class.name}}",
+      "traceEntryCaptureSelfNested": false,
+      "timerName": "spring controller"
     }
   ]
 }

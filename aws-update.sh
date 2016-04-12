@@ -16,8 +16,8 @@ update_script="
 sudo service tomcat8 stop
 
 # do not delete data folder
-sudo rm -r /usr/share/tomcat8/glowroot/plugins
-sudo rm -r /usr/share/tomcat8/glowroot/glowroot.log
+sudo rm -rf /usr/share/tomcat8/glowroot/plugins
+sudo rm -f /usr/share/tomcat8/glowroot/glowroot.log
 sudo unzip -o glowroot-dist.zip -d $TOMCAT_HOME
 sudo cp config.json $TOMCAT_HOME/glowroot
 sudo chown -R tomcat:tomcat $TOMCAT_HOME/glowroot

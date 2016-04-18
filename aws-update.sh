@@ -20,6 +20,7 @@ sudo rm -rf /usr/share/tomcat8/glowroot/plugins
 sudo rm -f /usr/share/tomcat8/glowroot/glowroot.log
 sudo unzip -o glowroot-dist.zip -d $TOMCAT_HOME
 sudo cp config.json $TOMCAT_HOME/glowroot
+sudo cp admin.json $TOMCAT_HOME/glowroot
 sudo chown -R tomcat:tomcat $TOMCAT_HOME/glowroot
 
 jvm_args=\"-javaagent:$TOMCAT_HOME/glowroot/glowroot.jar -javaagent:$TOMCAT_HOME/heatclinic/spring-instrument.jar -XX:+UseG1GC -Druntime.environment=production -Ddatabase.url=jdbc:mysql://localhost:3306/heatclinic?useUnicode=true&characterEncoding=utf8 -Ddatabase.user=heatclinic -Ddatabase.password=heatclinic -Ddatabase.driver=org.mariadb.jdbc.Driver -Dproperty-shared-override=$TOMCAT_HOME/heatclinic/heatclinic.properties -Dglowroot.internal.googleAnalyticsTrackingId=UA-35673195-2 -Dglowroot.internal.ui.workerThreads=10 -Dglowroot.internal.h2.cacheSize=131072\"

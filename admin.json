@@ -1,0 +1,27 @@
+{
+  "access": {
+    "port": 4000,
+    "adminPasswordHash": "v3nqmcl6C2sjQI0M8RV4gA:d3AxkhLzPtJrgNogawjR2A:100000",
+    "anonymousAccess": "read-only",
+    "sessionTimeoutMinutes": 30
+  },
+  "storage": {
+    "rollupExpirationHours": [
+      48,
+      336,
+      1440
+    ],
+    "traceExpirationHours": 720,
+    "rollupCappedDatabaseSizesMb": [
+      500,
+      1000,
+      2000
+    ],
+    "traceCappedDatabaseSizeMb": 2000
+  },
+  "smtp": {
+    "fromEmailAddress": "glowroot@demo.glowroot.org",
+    "host": "localhost",
+    "ssl": false
+  }
+}

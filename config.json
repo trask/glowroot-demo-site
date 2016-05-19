@@ -1,7 +1,7 @@
 {
   "transactions": {
-    "profilingIntervalMillis": 1000,
     "slowThresholdMillis": 2000,
+    "profilingIntervalMillis": 1000,
     "captureThreadStats": true
   },
   "ui": {
@@ -153,8 +153,26 @@
       }
     },
     {
+      "id": "executor",
+      "properties": { }
+    },
+    {
+      "id": "grails",
+      "properties": { }
+    },
+    {
+      "id": "hibernate",
+      "properties": { }
+    },
+    {
       "id": "http-client",
       "properties": { }
+    },
+    {
+      "id": "jaxrs",
+      "properties": {
+        "useAltTransactionNaming": false
+      }
     },
     {
       "id": "jdbc",
@@ -176,6 +194,14 @@
       "properties": { }
     },
     {
+      "id": "jsf",
+      "properties": { }
+    },
+    {
+      "id": "jsp",
+      "properties": { }
+    },
+    {
       "id": "logger",
       "properties": {
         "traceErrorOnErrorWithThrowable": true,
@@ -185,7 +211,21 @@
       }
     },
     {
+      "id": "netty",
+      "properties": { }
+    },
+    {
+      "id": "play",
+      "properties": {
+        "useAltTransactionNaming": false
+      }
+    },
+    {
       "id": "quartz",
+      "properties": { }
+    },
+    {
+      "id": "redis",
       "properties": { }
     },
     {
@@ -198,6 +238,20 @@
         "captureRequestHeaders": "",
         "captureResponseHeaders": ""
       }
+    },
+    {
+      "id": "spray",
+      "properties": { }
+    },
+    {
+      "id": "spring",
+      "properties": {
+        "useAltTransactionNaming": false
+      }
+    },
+    {
+      "id": "struts",
+      "properties": { }
     }
   ],
   "instrumentation": [

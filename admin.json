@@ -7,15 +7,17 @@
   },
   "storage": {
     "rollupExpirationHours": [
-      48,
+      72,
       336,
-      1440
+      2160,
+      2160
     ],
-    "traceExpirationHours": 720,
+    "traceExpirationHours": 336,
     "rollupCappedDatabaseSizesMb": [
       500,
       1000,
-      2000
+      2000,
+      500
     ],
     "traceCappedDatabaseSizeMb": 2000
   },

@@ -1,8 +1,44 @@
 {
-  "access": {
+  "users": [
+    {
+      "username": "trask",
+      "passwordHash": "$shiro1$SHA-256$500000$jTCR+IOuKIQFsY/kCUJBaA==$txKd1msK38snUPKGhFjJJuhyCfZbEzDOd3ojGC6SFHA=",
+      "roles": [
+        "Administrator"
+      ]
+    },
+    {
+      "username": "anonymous",
+      "passwordHash": "",
+      "roles": [
+        "Anonymous"
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "name": "Administrator",
+      "permissions": [
+        "agent:view",
+        "agent:tool",
+        "agent:config:view",
+        "agent:config:edit",
+        "admin"
+      ]
+    },
+    {
+      "name": "Anonymous",
+      "permissions": [
+        "agent:view",
+        "agent:tool:threadDump",
+        "agent:tool:mbeanTree",
+        "agent:config:view",
+        "admin:view"
+      ]
+    }
+  ],
+  "web": {
     "port": 4000,
-    "adminPasswordHash": "v3nqmcl6C2sjQI0M8RV4gA:d3AxkhLzPtJrgNogawjR2A:100000",
-    "anonymousAccess": "read-only",
     "sessionTimeoutMinutes": 30
   },
   "storage": {

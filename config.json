@@ -27,7 +27,7 @@
       "mbeanObjectName": "java.lang:type=Memory",
       "mbeanAttributes": [
         {
-          "name": "HeapMemoryUsage/used",
+          "name": "HeapMemoryUsage.used",
           "counter": false
         }
       ]
@@ -36,7 +36,7 @@
       "mbeanObjectName": "java.lang:type=MemoryPool,name=*",
       "mbeanAttributes": [
         {
-          "name": "Usage/used",
+          "name": "Usage.used",
           "counter": false
         }
       ]
@@ -96,6 +96,14 @@
           "counter": false
         }
       ]
+    },
+    {
+      "mbeanObjectName": "org.glowroot:type=FileSystem,name=/",
+      "mbeanAttributes": [
+        {
+          "name": "PercentFull"
+        }
+      ]
     }
   ],
   "alerts": [
@@ -139,6 +147,15 @@
       "transactionThresholdMillis": 5000,
       "minTransactionCount": 100,
       "timePeriodSeconds": 60,
+      "emailAddresses": [
+        "trask.stalnaker@gmail.com"
+      ]
+    },
+    {
+      "kind": "gauge",
+      "gaugeName": "org.glowroot:type=FileSystem,name=/:PercentFull",
+      "gaugeThreshold": 80.0,
+      "timePeriodSeconds": 300,
       "emailAddresses": [
         "trask.stalnaker@gmail.com"
       ]

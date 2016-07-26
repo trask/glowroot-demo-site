@@ -2,7 +2,7 @@
   "users": [
     {
       "username": "trask",
-      "passwordHash": "$shiro1$SHA-256$500000$jTCR+IOuKIQFsY/kCUJBaA==$txKd1msK38snUPKGhFjJJuhyCfZbEzDOd3ojGC6SFHA=",
+      "passwordHash": "tNCoiO5Tb20oaMdZXrkTBg:8RzfO9YwgoZ7I4tTOmLgPQ:500000",
       "roles": [
         "Administrator"
       ]

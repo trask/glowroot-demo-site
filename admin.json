@@ -19,26 +19,32 @@
     {
       "name": "Administrator",
       "permissions": [
-        "agent:view",
-        "agent:tool",
-        "agent:config:view",
-        "agent:config:edit",
+        "agent:transaction",
+        "agent:error",
+        "agent:jvm",
+        "agent:config",
         "admin"
       ]
     },
     {
       "name": "Anonymous",
       "permissions": [
-        "agent:view",
-        "agent:tool:threadDump",
-        "agent:tool:mbeanTree",
+        "agent:transaction",
+        "agent:error",
+        "agent:jvm:gauges",
+        "agent:jvm:threadDump",
+        "agent:jvm:heapHistogram",
+        "agent:jvm:mbeanTree",
+        "agent:jvm:systemProperties",
+        "agent:jvm:environment",
         "agent:config:view",
         "admin:view"
       ]
     }
   ],
   "web": {
-    "port": 4000,
+    "port": 80,
+    "bindAddress": "0.0.0.0",
     "sessionTimeoutMinutes": 30
   },
   "storage": {

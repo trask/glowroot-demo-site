@@ -10,7 +10,7 @@
 : ${SECURITY_GROUP_ID:?}
 : ${KEY_NAME:?}
 : ${PRIVATE_KEY_FILE:?}
-: ${GLOWROOT_DIST_ZIP:=../glowroot/agent-parent/distribution/target/glowroot-*-dist.zip}
+: ${GLOWROOT_DIST_ZIP:=../glowroot/agent/dist/target/glowroot-agent-*-dist.zip}
 : ${CLOCKSOURCE:=tsc}
 
 : ${TOMCAT_HOME:=/usr/share/tomcat8}

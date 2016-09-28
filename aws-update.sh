@@ -7,7 +7,7 @@
 : ${HOST:=ec2-54-68-196-98.us-west-2.compute.amazonaws.com}
 : ${KEY_NAME:?}
 : ${PRIVATE_KEY_FILE:?}
-: ${GLOWROOT_DIST_ZIP:=../glowroot/agent-parent/distribution/target/glowroot-*-dist.zip}
+: ${GLOWROOT_DIST_ZIP:=../glowroot/agent/dist/target/glowroot-agent-*-dist.zip}
 
 : ${TOMCAT_HOME:=/usr/share/tomcat8}
 : ${TOMCAT_SERVICE_NAME:=tomcat8}

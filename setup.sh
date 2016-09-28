@@ -5,19 +5,18 @@
 
 # download heatclinic
 git clone https://github.com/BroadleafCommerce/DemoSite.git heatclinic
-# add StatementCache so that simulated database errors are on jdbc execution (and can see sql) instead of on prepare statement
 (cd heatclinic \
-  && git checkout broadleaf-4.0.5-GA \
+  && git checkout broadleaf-5.0.3-GA \
   && mvn package)
 
 # download gatling
-curl -o gatling.zip https://repo1.maven.org/maven2/io/gatling/highcharts/gatling-charts-highcharts-bundle/2.1.7/gatling-charts-highcharts-bundle-2.1.7-bundle.zip
+curl -o gatling.zip https://repo1.maven.org/maven2/io/gatling/highcharts/gatling-charts-highcharts-bundle/2.2.2/gatling-charts-highcharts-bundle-2.2.2-bundle.zip
 unzip gatling.zip
 mv gatling-charts-highcharts-* gatling
 rm gatling.zip
 
 # download mariadb jdbc driver
-curl -o mariadb-java-client.jar http://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/1.3.2/mariadb-java-client-1.3.2.jar
+curl -o mariadb-java-client.jar http://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/1.5.2/mariadb-java-client-1.5.2.jar
 
 # create mysql user for heatclinic
 mysql --user=root --password=password <<EOF
@@ -35,11 +34,11 @@ sudo chown -R tomcat:tomcat $TOMCAT_HOME/glowroot
 
 # install spring-instrument javaagent somewhere tomcat can access
 sudo mkdir -p $TOMCAT_HOME/heatclinic
-sudo cp heatclinic/lib/spring-instrument-*.RELEASE.jar $TOMCAT_HOME/heatclinic/spring-instrument.jar
+sudo cp heatclinic/site/target/agents/spring-instrument.jar $TOMCAT_HOME/heatclinic/spring-instrument.jar
 
 # install heatclinic war
 sudo cp heatclinic/site/target/mycompany.war $TOMCAT_HOME/webapps/ROOT.war
-sudo cp heatclinic/lib/tomcat-server-conf/context.xml $TOMCAT_HOME/conf
+sudo cp heatclinic/tomcat-server-conf/context.xml $TOMCAT_HOME/conf
 
 # create directory that heatclinic uses for generating/caching static resources
 sudo mkdir /broadleaf

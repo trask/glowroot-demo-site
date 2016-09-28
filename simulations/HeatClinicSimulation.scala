@@ -11,7 +11,7 @@ class HeatClinicSimulation extends Simulation {
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
     .acceptEncodingHeader("gzip, deflate")
     .acceptLanguageHeader("en-US,en;q=0.5")
-    .connection("keep-alive")
+    .connectionHeader("keep-alive")
 
   def scn = scenario("Heat Clinic")
     .exec(http("home").get("/"))

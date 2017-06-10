@@ -94,6 +94,14 @@
           "name": "PercentFull"
         }
       ]
+    },
+    {
+      "mbeanObjectName": "java.lang:type=ClassLoading",
+      "mbeanAttributes": [
+        {
+          "name": "LoadedClassCount"
+        }
+      ]
     }
   ],
   "alerts": [

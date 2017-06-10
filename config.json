@@ -13,7 +13,6 @@
     ]
   },
   "advanced": {
-    "weavingTimer": false,
     "immediatePartialStoreThresholdSeconds": 60,
     "maxAggregateTransactionsPerType": 500,
     "maxAggregateQueriesPerType": 500,
@@ -27,8 +26,7 @@
       "mbeanObjectName": "java.lang:type=Memory",
       "mbeanAttributes": [
         {
-          "name": "HeapMemoryUsage.used",
-          "counter": false
+          "name": "HeapMemoryUsage.used"
         }
       ]
     },
@@ -36,8 +34,7 @@
       "mbeanObjectName": "java.lang:type=MemoryPool,name=*",
       "mbeanAttributes": [
         {
-          "name": "Usage.used",
-          "counter": false
+          "name": "Usage.used"
         }
       ]
     },
@@ -58,16 +55,13 @@
       "mbeanObjectName": "java.lang:type=OperatingSystem",
       "mbeanAttributes": [
         {
-          "name": "FreePhysicalMemorySize",
-          "counter": false
+          "name": "FreePhysicalMemorySize"
         },
         {
-          "name": "ProcessCpuLoad",
-          "counter": false
+          "name": "ProcessCpuLoad"
         },
         {
-          "name": "SystemCpuLoad",
-          "counter": false
+          "name": "SystemCpuLoad"
         }
       ]
     },
@@ -75,12 +69,10 @@
       "mbeanObjectName": "tomcat.jdbc:name=\"jdbc/web\",context=/,engine=Catalina,type=ConnectionPool,host=localhost,class=org.apache.tomcat.jdbc.pool.DataSource",
       "mbeanAttributes": [
         {
-          "name": "Size",
-          "counter": false
+          "name": "Size"
         },
         {
-          "name": "Active",
-          "counter": false
+          "name": "Active"
         }
       ]
     },
@@ -88,12 +80,10 @@
       "mbeanObjectName": "Catalina:type=ThreadPool,name=\"http-nio-8080\"",
       "mbeanAttributes": [
         {
-          "name": "currentThreadsBusy",
-          "counter": false
+          "name": "currentThreadsBusy"
         },
         {
-          "name": "currentThreadCount",
-          "counter": false
+          "name": "currentThreadCount"
         }
       ]
     },
@@ -108,64 +98,87 @@
   ],
   "alerts": [
     {
-      "kind": "transaction",
-      "transactionType": "Servlet",
-      "transactionPercentile": 95.0,
-      "transactionThresholdMillis": 5000,
-      "minTransactionCount": 1000,
-      "timePeriodSeconds": 3600,
-      "emailAddresses": [
-        "trask.stalnaker@gmail.com"
-      ]
+      "condition": {
+        "conditionType": "metric",
+        "metric": "transaction:x-percentile",
+        "transactionType": "Servlet",
+        "percentile": 95.0,
+        "threshold": 5000.0,
+        "timePeriodSeconds": 3600,
+        "minTransactionCount": 1000
+      },
+      "emailNotification": {
+        "emailAddresses": [
+          "trask.stalnaker@gmail.com"
+        ]
+      }
     },
     {
-      "kind": "transaction",
-      "transactionType": "Servlet",
-      "transactionPercentile": 50.0,
-      "transactionThresholdMillis": 5000,
-      "minTransactionCount": 100,
-      "timePeriodSeconds": 3600,
-      "emailAddresses": [
-        "trask.stalnaker@gmail.com"
-      ]
+      "condition": {
+        "conditionType": "metric",
+        "metric": "transaction:x-percentile",
+        "transactionType": "Servlet",
+        "percentile": 50.0,
+        "threshold": 5000.0,
+        "timePeriodSeconds": 3600,
+        "minTransactionCount": 100
+      },
+      "emailNotification": {
+        "emailAddresses": [
+          "trask.stalnaker@gmail.com"
+        ]
+      }
     },
     {
-      "kind": "transaction",
-      "transactionType": "Servlet",
-      "transactionPercentile": 50.0,
-      "transactionThresholdMillis": 5000,
-      "minTransactionCount": 100,
-      "timePeriodSeconds": 300,
-      "emailAddresses": [
-        "trask.stalnaker@gmail.com"
-      ]
+      "condition": {
+        "conditionType": "metric",
+        "metric": "transaction:x-percentile",
+        "transactionType": "Servlet",
+        "percentile": 50.0,
+        "threshold": 5000.0,
+        "timePeriodSeconds": 300,
+        "minTransactionCount": 100
+      },
+      "emailNotification": {
+        "emailAddresses": [
+          "trask.stalnaker@gmail.com"
+        ]
+      }
     },
     {
-      "kind": "transaction",
-      "transactionType": "Servlet",
-      "transactionPercentile": 50.0,
-      "transactionThresholdMillis": 5000,
-      "minTransactionCount": 100,
-      "timePeriodSeconds": 60,
-      "emailAddresses": [
-        "trask.stalnaker@gmail.com"
-      ]
+      "condition": {
+        "conditionType": "metric",
+        "metric": "transaction:x-percentile",
+        "transactionType": "Servlet",
+        "percentile": 50.0,
+        "threshold": 5000.0,
+        "timePeriodSeconds": 60,
+        "minTransactionCount": 100
+      },
+      "emailNotification": {
+        "emailAddresses": [
+          "trask.stalnaker@gmail.com"
+        ]
+      }
     },
     {
-      "kind": "gauge",
-      "gaugeName": "org.glowroot:type=FileSystem,name=/:PercentFull",
-      "gaugeThreshold": 80.0,
-      "timePeriodSeconds": 300,
-      "emailAddresses": [
-        "trask.stalnaker@gmail.com"
-      ]
+      "condition": {
+        "conditionType": "metric",
+        "metric": "gauge:org.glowroot:type=FileSystem,name=/:PercentFull",
+        "threshold": 80.0,
+        "timePeriodSeconds": 300
+      },
+      "emailNotification": {
+        "emailAddresses": [
+          "trask.stalnaker@gmail.com"
+        ]
+      }
     }
   ],
   "plugins": [
     {
       "id": "cassandra",
       "properties": {
-        "captureResultSetNavigate": true,
         "stackTraceThresholdMillis": 1000.0
       }
     },
@@ -253,12 +266,10 @@
         "captureRequestParameters": "*",
         "maskRequestParameters": "*password*",
         "captureRequestHeaders": "",
+        "captureRequestRemoteAddr": false,
+        "captureRequestRemoteHost": false,
         "captureResponseHeaders": ""
       }
-    },
-    {
-      "id": "spray",
-      "properties": { }
     },
     {
       "id": "spring",
@@ -282,7 +293,6 @@
       ],
       "captureKind": "trace-entry",
       "traceEntryMessageTemplate": "thymeleaf view: {{this.templateName}}",
-      "traceEntryCaptureSelfNested": false,
       "timerName": "thymeleaf view"
     },
     {
@@ -294,7 +304,6 @@
       ],
       "captureKind": "trace-entry",
       "traceEntryMessageTemplate": "spring controller: {{this.class.name}}",
-      "traceEntryCaptureSelfNested": false,
       "timerName": "spring controller"
     }
   ]

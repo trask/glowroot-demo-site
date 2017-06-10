@@ -9,7 +9,6 @@
     },
     {
       "username": "anonymous",
-      "passwordHash": "",
       "roles": [
         "Anonymous"
       ]
@@ -46,7 +45,9 @@
   "web": {
     "port": 4000,
     "bindAddress": "127.0.0.1",
-    "sessionTimeoutMinutes": 30
+    "contextPath": "/",
+    "sessionTimeoutMinutes": 30,
+    "sessionCookieName": "GLOWROOT_SESSION_ID"
   },
   "storage": {
     "rollupExpirationHours": [
@@ -56,6 +57,7 @@
       2160
     ],
     "traceExpirationHours": 336,
+    "fullQueryTextExpirationHours": 336,
     "rollupCappedDatabaseSizesMb": [
       500,
       1000,
@@ -65,8 +67,7 @@
     "traceCappedDatabaseSizeMb": 2000
   },
   "smtp": {
-    "fromEmailAddress": "glowroot@demo.glowroot.org",
     "host": "localhost",
-    "ssl": false
+    "fromEmailAddress": "glowroot@demo.glowroot.org"
   }
 }

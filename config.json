@@ -5,11 +5,14 @@
     "captureThreadStats": true
   },
   "ui": {
-    "defaultDisplayedTransactionType": "Web",
-    "defaultDisplayedPercentiles": [
+    "defaultTransactionType": "Web",
+    "defaultPercentiles": [
       50.0,
       95.0,
       99.0
+    ],
+    "defaultGaugeNames": [
+      "java.lang:type=Memory:HeapMemoryUsage.used"
     ]
   },
   "advanced": {
@@ -115,6 +118,7 @@
         "timePeriodSeconds": 3600,
         "minTransactionCount": 1000
       },
+      "severity": "critical",
       "emailNotification": {
         "emailAddresses": [
           "trask.stalnaker@gmail.com"
@@ -131,6 +135,7 @@
         "timePeriodSeconds": 3600,
         "minTransactionCount": 100
       },
+      "severity": "critical",
       "emailNotification": {
         "emailAddresses": [
           "trask.stalnaker@gmail.com"
@@ -147,6 +152,7 @@
         "timePeriodSeconds": 300,
         "minTransactionCount": 100
       },
+      "severity": "critical",
       "emailNotification": {
         "emailAddresses": [
           "trask.stalnaker@gmail.com"
@@ -163,6 +169,7 @@
         "timePeriodSeconds": 60,
         "minTransactionCount": 100
       },
+      "severity": "critical",
       "emailNotification": {
         "emailAddresses": [
           "trask.stalnaker@gmail.com"
@@ -176,6 +183,7 @@
         "threshold": 80.0,
         "timePeriodSeconds": 300
       },
+      "severity": "critical",
       "emailNotification": {
         "emailAddresses": [
           "trask.stalnaker@gmail.com"
@@ -186,6 +194,12 @@
   "plugins": [
     {
       "id": "cassandra",
+      "properties": {
+        "stackTraceThresholdMillis": 1000.0
+      }
+    },
+    {
+      "id": "elasticsearch",
       "properties": {
         "stackTraceThresholdMillis": 1000.0
       }
@@ -205,6 +219,17 @@
     {
       "id": "http-client",
       "properties": { }
+    },
+    {
+      "id": "java-http-server",
+      "properties": {
+        "captureRequestHeaders": "",
+        "maskRequestHeaders": "Authorization",
+        "captureRequestRemoteAddr": false,
+        "captureRequestRemoteHost": false,
+        "captureResponseHeaders": "",
+        "traceErrorOn4xxResponseCode": false
+      }
     },
     {
       "id": "jaxrs",
@@ -276,7 +301,8 @@
         "captureRequestHeaders": "",
         "captureRequestRemoteAddr": false,
         "captureRequestRemoteHost": false,
-        "captureResponseHeaders": ""
+        "captureResponseHeaders": "",
+        "traceErrorOn4xxResponseCode": false
       }
     },
     {

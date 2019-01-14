@@ -46,7 +46,7 @@ done
 setup_script="
 sudo yum -y install java-1.8.0-openjdk-devel
 echo 2 | sudo alternatives --config java
-sudo yum -y install $TOMCAT_SERVICE_NAME
+sudo yum -y install tomcat8
 sudo yum -y install mysql-server
 sudo service mysqld start
 sudo chkconfig mysqld on

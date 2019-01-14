@@ -112,7 +112,7 @@
       "condition": {
         "conditionType": "metric",
         "metric": "transaction:x-percentile",
-        "transactionType": "Servlet",
+        "transactionType": "Web",
         "percentile": 95.0,
         "threshold": 5000.0,
         "timePeriodSeconds": 3600,
@@ -129,7 +129,7 @@
       "condition": {
         "conditionType": "metric",
         "metric": "transaction:x-percentile",
-        "transactionType": "Servlet",
+        "transactionType": "Web",
         "percentile": 50.0,
         "threshold": 5000.0,
         "timePeriodSeconds": 3600,
@@ -146,7 +146,7 @@
       "condition": {
         "conditionType": "metric",
         "metric": "transaction:x-percentile",
-        "transactionType": "Servlet",
+        "transactionType": "Web",
         "percentile": 50.0,
         "threshold": 5000.0,
         "timePeriodSeconds": 300,
@@ -163,7 +163,7 @@
       "condition": {
         "conditionType": "metric",
         "metric": "transaction:x-percentile",
-        "transactionType": "Servlet",
+        "transactionType": "Web",
         "percentile": 50.0,
         "threshold": 5000.0,
         "timePeriodSeconds": 60,
@@ -184,6 +184,23 @@
         "timePeriodSeconds": 300
       },
       "severity": "critical",
+      "emailNotification": {
+        "emailAddresses": [
+          "trask.stalnaker@gmail.com"
+        ]
+      }
+    },
+    {
+      "condition": {
+        "conditionType": "metric",
+        "metric": "transaction:count",
+        "transactionType": "Web",
+        "transactionName": "",
+        "threshold": 0.0,
+        "lowerBoundThreshold": true,
+        "timePeriodSeconds": 600
+      },
+      "severity": "high",
       "emailNotification": {
         "emailAddresses": [
           "trask.stalnaker@gmail.com"

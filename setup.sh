@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
-: ${TOMCAT_HOME:=/usr/share/tomcat8}
-: ${TOMCAT_SERVICE_NAME:=tomcat8}
+: ${TOMCAT_HOME:=/usr/share/tomcat}
+: ${TOMCAT_SERVICE_NAME:=tomcat}
 
 # download heatclinic
 git clone https://github.com/trask/BroadleafCommerce-DemoSite-Old.git heatclinic
@@ -50,7 +50,7 @@ sudo cp heatclinic-createdb.properties $TOMCAT_HOME/heatclinic/heatclinic.proper
 jvm_args="-javaagent:$TOMCAT_HOME/heatclinic/spring-instrument.jar -XX:+UseG1GC -Druntime.environment=production -Ddatabase.url=jdbc:mysql://localhost:3306/heatclinic?useUnicode=true&characterEncoding=utf8 -Ddatabase.user=heatclinic -Ddatabase.password=heatclinic -Ddatabase.driver=org.mariadb.jdbc.Driver -Dproperty-shared-override=$TOMCAT_HOME/heatclinic/heatclinic.properties"
 echo CATALINA_OPTS=\"$jvm_args\" | sudo tee /etc/sysconfig/$TOMCAT_SERVICE_NAME > /dev/null
 
-sudo service $TOMCAT_SERVICE_NAME start
+sudo systemctl start $TOMCAT_SERVICE_NAME.service
 
 # wait for tomcat to start
 while
@@ -61,7 +61,7 @@ do
   echo waiting for tomcat to start ...
 done
 
-sudo service $TOMCAT_SERVICE_NAME stop
+sudo systemctl stop $TOMCAT_SERVICE_NAME.service
 
 # copy extra heatclinic properties file somewhere tomcat can access
 sudo cp heatclinic.properties $TOMCAT_HOME/heatclinic/heatclinic.properties

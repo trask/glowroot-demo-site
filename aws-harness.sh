@@ -4,17 +4,16 @@
 : ${AWS_SECRET_ACCESS_KEY:?}
 : ${AWS_DEFAULT_REGION:?}
 
-: ${IMAGE_ID:=ami-63b25203}
-: ${INSTANCE_TYPE:=c4.large}
+: ${IMAGE_ID:=ami-0c8ae7b6508eff3f4}
+: ${INSTANCE_TYPE:=t4g.medium}
 : ${VPC_SUBNET_ID:?}
 : ${SECURITY_GROUP_ID:?}
 : ${KEY_NAME:?}
 : ${PRIVATE_KEY_FILE:?}
 : ${GLOWROOT_DIST_ZIP:=../glowroot/agent/dist/target/glowroot-agent-*-dist.zip}
-: ${CLOCKSOURCE:=tsc}
 
-: ${TOMCAT_HOME:=/usr/share/tomcat8}
-: ${TOMCAT_SERVICE_NAME:=tomcat8}
+: ${TOMCAT_HOME:=/usr/share/tomcat}
+: ${TOMCAT_SERVICE_NAME:=tomcat}
 
 echo creating instance ...
 instance_id=`aws ec2 run-instances --image-id $IMAGE_ID --count 1 --instance-type $INSTANCE_TYPE --key-name $KEY_NAME --subnet-id $VPC_SUBNET_ID --security-group-id $SECURITY_GROUP_ID --block-device-mappings '[{"DeviceName":"/dev/xvda","Ebs":{"VolumeSize":64}}]' | grep InstanceId | cut -d '"' -f4`
@@ -44,15 +43,14 @@ do
 done
 
 setup_script="
+sudo yum -y update
 sudo yum -y install java-1.8.0-openjdk-devel
-echo 2 | sudo alternatives --config java
-sudo yum -y install tomcat8
-sudo yum -y install mysql-server
-sudo service mysqld start
-sudo chkconfig mysqld on
+sudo amazon-linux-extras install -y tomcat8.5
+sudo yum -y install mariadb-server
+sudo systemctl enable mariadb.service
+sudo systemctl start mariadb.service
 mysqladmin -u root password password
 sudo yum -y install git
-echo $CLOCKSOURCE | sudo tee /sys/devices/system/clocksource/clocksource0/current_clocksource > /dev/null
 
 curl http://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz | tar xz
 export PATH=\$PATH:\$PWD/apache-maven-3.3.9/bin
@@ -66,14 +64,14 @@ sudo chown -R tomcat:tomcat $TOMCAT_HOME/glowroot
 jvm_args=\"-javaagent:$TOMCAT_HOME/glowroot/glowroot.jar -javaagent:$TOMCAT_HOME/heatclinic/spring-instrument.jar -XX:+UseG1GC -Druntime.environment=production -Ddatabase.url=jdbc:mysql://localhost:3306/heatclinic?useUnicode=true&characterEncoding=utf8 -Ddatabase.user=heatclinic -Ddatabase.password=heatclinic -Ddatabase.driver=org.mariadb.jdbc.Driver -Dproperty-shared-override=$TOMCAT_HOME/heatclinic/heatclinic.properties -Dglowroot.internal.googleAnalyticsTrackingId=UA-35673195-2 -Dglowroot.internal.ui.workerThreads=10 -Dglowroot.internal.h2.cacheSize=131072\"
 echo CATALINA_OPTS=\\\"\$jvm_args\\\" | sudo tee /etc/sysconfig/$TOMCAT_SERVICE_NAME > /dev/null
 
-sudo chkconfig $TOMCAT_SERVICE_NAME on
-sudo service $TOMCAT_SERVICE_NAME start
+sudo systemctl enable $TOMCAT_SERVICE_NAME.service
+sudo systemctl start $TOMCAT_SERVICE_NAME.service
 
-sudo yum -y install postfix
-sudo chkconfig postfix on
+#sudo yum -y install postfix
+#sudo systemctl enable postfix.service
 
-sudo yum -y install nginx
-sudo chkconfig nginx on
+sudo amazon-linux-extras install -y nginx1
+sudo systemctl enable nginx.service
 
 sudo tee /etc/nginx/nginx.conf > /dev/null <<'EOF'
 events {
@@ -92,7 +90,7 @@ http {
 }
 EOF
 
-sudo service nginx start
+sudo systemctl start nginx.service
 
 # wait for tomcat to start
 while

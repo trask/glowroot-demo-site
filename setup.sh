@@ -15,18 +15,18 @@ unzip gatling.zip
 mv gatling-charts-highcharts-* gatling
 rm gatling.zip
 
-# download mariadb jdbc driver
-curl -o mariadb-java-client.jar https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/1.5.2/mariadb-java-client-1.5.2.jar
+# download mysql jdbc driver
+curl -o mysql-connector-java.jar https://repo1.maven.org/maven2/mysql/mysql-connector-java/6.0.4/mysql-connector-java-6.0.4.jar
 
 # create mysql user for heatclinic
 mysql --user=root --password=password <<EOF
 create user heatclinic@localhost identified by 'heatclinic';
-create database heatclinic;
+create database heatclinic default character set utf8 default collate utf8_general_ci;
 grant all privileges on heatclinic.* to heatclinic@localhost;
 EOF
 
-# install mariadb jdbc driver
-sudo cp mariadb-java-client.jar $TOMCAT_HOME/lib
+# install mysql jdbc driver
+sudo cp mysql-connector-java.jar $TOMCAT_HOME/lib
 
 # install glowroot somewhere tomcat can access
 sudo unzip glowroot-dist.zip -d $TOMCAT_HOME
@@ -47,7 +47,7 @@ sudo chown tomcat:tomcat /broadleaf
 # build the database
 sudo cp heatclinic-createdb.properties $TOMCAT_HOME/heatclinic/heatclinic.properties
 
-jvm_args="-javaagent:$TOMCAT_HOME/heatclinic/spring-instrument.jar -XX:+UseG1GC -Druntime.environment=production -Ddatabase.url=jdbc:mysql://localhost:3306/heatclinic?useUnicode=true&characterEncoding=utf8 -Ddatabase.user=heatclinic -Ddatabase.password=heatclinic -Ddatabase.driver=org.mariadb.jdbc.Driver -Dproperty-shared-override=$TOMCAT_HOME/heatclinic/heatclinic.properties"
+jvm_args="-javaagent:$TOMCAT_HOME/heatclinic/spring-instrument.jar -XX:+UseG1GC -Druntime.environment=production -Ddatabase.url=jdbc:mysql://localhost:3306/heatclinic?useUnicode=true&characterEncoding=utf8 -Ddatabase.user=heatclinic -Ddatabase.password=heatclinic -Ddatabase.driver=com.mysql.cj.jdbc.Driver -Dproperty-shared-override=$TOMCAT_HOME/heatclinic/heatclinic.properties"
 echo CATALINA_OPTS=\"$jvm_args\" | sudo tee /etc/sysconfig/$TOMCAT_SERVICE_NAME > /dev/null
 
 sudo systemctl start $TOMCAT_SERVICE_NAME.service

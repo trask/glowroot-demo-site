@@ -61,7 +61,7 @@ sudo cp config.json $TOMCAT_HOME/glowroot
 sudo cp admin.json $TOMCAT_HOME/glowroot
 sudo chown -R tomcat:tomcat $TOMCAT_HOME/glowroot
 
-jvm_args=\"-javaagent:$TOMCAT_HOME/glowroot/glowroot.jar -javaagent:$TOMCAT_HOME/heatclinic/spring-instrument.jar -XX:+UseG1GC -Druntime.environment=production -Ddatabase.url=jdbc:mysql://localhost:3306/heatclinic?useUnicode=true&characterEncoding=utf8 -Ddatabase.user=heatclinic -Ddatabase.password=heatclinic -Ddatabase.driver=org.mariadb.jdbc.Driver -Dproperty-shared-override=$TOMCAT_HOME/heatclinic/heatclinic.properties -Dglowroot.internal.googleAnalyticsTrackingId=UA-35673195-2 -Dglowroot.internal.ui.workerThreads=10 -Dglowroot.internal.h2.cacheSize=131072\"
+jvm_args=\"-javaagent:$TOMCAT_HOME/glowroot/glowroot.jar -javaagent:$TOMCAT_HOME/heatclinic/spring-instrument.jar -XX:+UseG1GC -Druntime.environment=production -Ddatabase.url=jdbc:mysql://localhost:3306/heatclinic?useUnicode=true&characterEncoding=utf8 -Ddatabase.user=heatclinic -Ddatabase.password=heatclinic -Ddatabase.driver=com.mysql.cj.jdbc.Driver -Dproperty-shared-override=$TOMCAT_HOME/heatclinic/heatclinic.properties -Dglowroot.internal.googleAnalyticsTrackingId=UA-35673195-2 -Dglowroot.internal.ui.workerThreads=10 -Dglowroot.internal.h2.cacheSize=131072\"
 echo CATALINA_OPTS=\\\"\$jvm_args\\\" | sudo tee /etc/sysconfig/$TOMCAT_SERVICE_NAME > /dev/null
 
 sudo systemctl enable $TOMCAT_SERVICE_NAME.service

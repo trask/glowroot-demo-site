@@ -16,7 +16,7 @@ mv gatling-charts-highcharts-* gatling
 rm gatling.zip
 
 # download mariadb jdbc driver
-curl -o mariadb-java-client.jar http://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/1.5.2/mariadb-java-client-1.5.2.jar
+curl -o mariadb-java-client.jar https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/1.5.2/mariadb-java-client-1.5.2.jar
 
 # create mysql user for heatclinic
 mysql --user=root --password=password <<EOF

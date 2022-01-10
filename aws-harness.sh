@@ -52,7 +52,7 @@ sudo systemctl start mariadb.service
 mysqladmin -u root password password
 sudo yum -y install git
 
-curl http://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz | tar xz
+curl https://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz | tar xz
 export PATH=\$PATH:\$PWD/apache-maven-3.3.9/bin
 
 ./setup.sh

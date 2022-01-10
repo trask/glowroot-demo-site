@@ -4,7 +4,7 @@
 : ${TOMCAT_SERVICE_NAME:=tomcat8}
 
 # download heatclinic
-git clone https://github.com/BroadleafCommerce/DemoSite.git heatclinic
+git clone https://github.com/trask/BroadleafCommerce-DemoSite-Old.git heatclinic
 (cd heatclinic \
   && git checkout broadleaf-4.0.5-GA \
   && mvn package)

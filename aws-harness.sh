@@ -17,7 +17,7 @@
 : ${TOMCAT_SERVICE_NAME:=tomcat8}
 
 echo creating instance ...
-instance_id=`aws ec2 run-instances --image-id $IMAGE_ID --count 1 --instance-type $INSTANCE_TYPE --key-name $KEY_NAME --subnet-id $VPC_SUBNET_ID --security-group-id $SECURITY_GROUP_ID --block-device-mappings '[{"DeviceName":"/dev/xvda","Ebs":{"VolumeSize":16}}]' | grep InstanceId | cut -d '"' -f4`
+instance_id=`aws ec2 run-instances --image-id $IMAGE_ID --count 1 --instance-type $INSTANCE_TYPE --key-name $KEY_NAME --subnet-id $VPC_SUBNET_ID --security-group-id $SECURITY_GROUP_ID --block-device-mappings '[{"DeviceName":"/dev/xvda","Ebs":{"VolumeSize":64}}]' | grep InstanceId | cut -d '"' -f4`
 
 # suppress stdout (but not stderr)
 aws ec2 create-tags --resources $instance_id --tags Key=Name,Value=demo.glowroot.org > /dev/null
